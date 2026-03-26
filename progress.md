@@ -2,12 +2,25 @@
 
 ## Current Status
 
-**Current Lesson:** 2 — Research Team (architecture design)
+**Current Lesson:** 3 — Project Scaffolding (single session)
 **Last Updated:** 2026-03-26
 
 ---
 
 ## History
+
+### Lesson 2 — Completed 2026-03-26
+
+Research Team — 3 teammates designed DevKit CLI architecture.
+
+**Team:** CLI Architect, Module Designer, DX Researcher (parallel research → cross-sharing → synthesis)
+**Deliverables:** `docs/architecture.md` (final blueprint), `src/shared/types.ts` (module interface contract), `dx-research.md` (DX patterns)
+**Key observations:**
+- All 3 teammates completed research tasks independently, then shared findings via mailbox
+- One design tension surfaced (output rendering ownership) and was resolved by team lead
+- Task dependencies worked correctly — share-findings blocked until all research done
+- Cross-team communication was organic — teammates messaged each other without prompting
+- Total: 5 tasks, 3 parallel research + 1 blocked sharing + 1 blocked synthesis
 
 ### Lesson 2 — Started 2026-03-26
 

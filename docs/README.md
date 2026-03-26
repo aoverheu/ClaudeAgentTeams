@@ -7,7 +7,7 @@ A hands-on deep-dive into Claude Code agent teams. Each lesson doc is a self-con
 | # | Lesson | Concept | Doc | Status |
 |---|--------|---------|-----|--------|
 | 1 | Understanding Agent Teams | Architecture, when to use teams vs subagents | [lesson_01.md](lesson_01.md) | Completed |
-| 2 | Research Team | Spawn prompts, team sizing, research-first approach | [lesson_02.md](lesson_02.md) | In progress |
+| 2 | Research Team | Spawn prompts, team sizing, research-first approach | [lesson_02.md](lesson_02.md) | Completed |
 | 3 | Project Scaffolding | When NOT to use teams (single session) | [lesson_03.md](lesson_03.md) | Not started |
 | 4 | Parallel Module Build | File ownership, self-claiming, 4-teammate coordination | [lesson_04.md](lesson_04.md) | Not started |
 | 5 | Quality Gates | Reviewer teammate, plan approval, hooks, external auditor | [lesson_05.md](lesson_05.md) | Not started |
@@ -24,6 +24,7 @@ Deep-dive docs on how agent team mechanics work under the hood. Created when a l
 | Lesson | Doc | Mechanics Covered |
 |--------|-----|-------------------|
 | 1 | [lesson_01_technical_details.md](lesson_01_technical_details.md) | TeamCreate, TaskCreate, Agent spawning, mailbox system, shutdown protocol |
+| 2 | [lesson_02_technical_details.md](lesson_02_technical_details.md) | Task dependencies (blockedBy), broadcast messaging, peer-to-peer DMs |
 
 ## How to Use This Reference
 

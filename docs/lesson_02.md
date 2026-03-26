@@ -1,6 +1,6 @@
 # Lesson 02: Project Scaffolding with a Research Team
-**Status:** IN PROGRESS
-**Date:** 2026-03-26 —
+**Status:** COMPLETED
+**Date:** 2026-03-26 — 2026-03-26
 
 ## Quick Reference
 Use a 3-teammate research team to design an application's architecture before writing code. This lesson demonstrates spawn prompts with rich context, team sizing (3 teammates), task dependencies, and how to get teammates to build on each other's findings. Research-first is the lowest-risk way to use agent teams because there are no file conflicts and no code to break.
@@ -127,24 +127,66 @@ Why structured this way:
 - Concrete output formats listed so the DX researcher doesn't go abstract
 
 ### Team Output
-_(to be filled after exercise)_
+
+**Team composition:** 3 teammates running in parallel, coordinated by team lead.
+
+**Teammate 1 — CLI Architect** (completed first alongside Module Designer):
+- Designed Commander.js entry point with `register*Command(program)` pattern
+- Defined global options: `--json`, `--verbose`, `--no-color`, `--config`, `--target`
+- Showed `optsWithGlobals()` for option inheritance to subcommands
+- Key insight: don't call `enablePositionalOptions()` so global flags work in any position
+- Designed the action handler flow: loadConfig → resolveOutputMode → validate → execute → format
+
+**Teammate 2 — Module Designer** (completed first alongside CLI Architect):
+- Wrote full TypeScript interface contract to `src/shared/types.ts`
+- Generic `Module<TOptions>` with `execute()` and `validate()` methods
+- `ModuleOutput = ModuleResult | ModuleErrorResult` union — modules never throw
+- Partial results handled as success + warnings array
+- Per-module typed options: `TodoOptions`, `DepAuditOptions`, `GitStatsOptions`, `CodeHealthOptions`
+- `ResultItem.meta` as `Record<string, unknown>` for module-specific data
+
+**Teammate 3 — DX Researcher** (completed shortly after):
+- Wrote comprehensive DX research doc to `dx-research.md`
+- Recommended Chalk + manual padding over cli-table3 for tables
+- Three output modes: color/plain/json with `resolveOutputMode()`
+- `.devkitrc.json` config with typed schema and override order
+- Testing: Vitest + memfs + vi.mock patterns for each module type
+- Progress indicators on stderr to keep stdout clean
+
+**Cross-team communication observed:**
+- Module Designer and CLI Architect exchanged messages on 3 integration points (targetPath as global option, ModuleOutput handling in action handlers, validate-then-execute pattern)
+- All three confirmed alignment after sharing findings
+- **One design tension resolved:** DX Researcher suggested modules accept OutputMode/chalk; Module Designer argued for pure-data modules. Team lead decided: modules stay pure (return data, never render). Reasons: testability, consistency, separation of concerns.
+
+**Final synthesis:** Team lead wrote `docs/architecture.md` combining all three designs into a unified blueprint covering directory structure, module interface, CLI commands, config format, output formatting spec, and testing strategy.
 
 ## Build Log
 ### Files Created
 | File | Description | Reason for Being |
 |------|-------------|-----------------|
-_(to be filled after exercise — expecting docs/architecture.md)_
+| `src/shared/types.ts` | Module interface contract — all TypeScript types | Written by Module Designer; defines the contract all 4 modules implement |
+| `dx-research.md` | DX research findings document | Written by DX Researcher; covers output, config, testing, installation |
+| `docs/architecture.md` | Final architecture document | Written by team lead; synthesizes all 3 teammates' research into implementation blueprint |
 
 ### Files Modified
 | File | What Changed | Why |
 |------|-------------|-----|
-_(to be filled after exercise)_
+| `progress.md` | Added Lesson 2 start entry | Session tracking per course workflow |
+| `docs/README.md` | Added Lesson 2 link | Course index per workflow |
 
 ### Decisions Made
-_(to be filled after exercise)_
+1. **Modules are pure data producers** — return structured `ModuleOutput`, never call `console.log` or use chalk. Formatter in CLI layer handles all rendering. (Resolved tension between DX Researcher and Module Designer)
+2. **Commander.js register pattern** — each command exports `register*Command(program)` for clean separation
+3. **No enablePositionalOptions()** — global flags work before or after subcommand
+4. **Config is optional** — missing `.devkitrc.json` silently uses defaults
+5. **Explicit module imports** — no plugin system, no dynamic discovery at this scale
+6. **Chalk + manual padding for tables** — no extra dependency
+7. **Progress on stderr** — stdout stays clean for piping/JSON
+8. **Vitest + memfs** — official recommended patterns for filesystem mocking
 
 ### Issues Encountered
-_(to be filled after exercise)_
+1. **Stale team from previous session** — had to `TeamDelete` an old `cli-research` team before creating `devkit-research`. Lesson: always clean up teams at end of session.
+2. **Output rendering ownership tension** — DX Researcher designed with modules rendering their own output; Module Designer designed pure-data modules. Resolved by team lead decision in favor of pure-data (2-1 consensus). This is a natural outcome of parallel independent research — teammates don't see each other's work until they share findings.
 
 ## Connections
 - **Previous:** Lesson 1 established Commander.js as the framework and demonstrated basic team mechanics (2 teammates, mailbox, task list)

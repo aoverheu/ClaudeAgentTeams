@@ -528,7 +528,7 @@ Run the `superpowers:code-reviewer` agent one final time against the complete pl
 | Lesson | Status | Key Concept |
 |--------|--------|-------------|
 | 1. Understanding Agent Teams | [x] | Architecture, when to use |
-| 2. Research Team | [ ] | Spawn prompts, team sizing |
+| 2. Research Team | [x] | Spawn prompts, team sizing |
 | 3. Project Scaffolding | [ ] | When NOT to use teams |
 | 4. Parallel Module Build | [ ] | File ownership, self-claiming |
 | 5. Quality Gates | [ ] | Reviewer teammate, plan approval, hooks |
