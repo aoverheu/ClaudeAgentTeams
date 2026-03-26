@@ -2,12 +2,28 @@
 
 ## Current Status
 
-**Current Lesson:** 3 completed — ready for Lesson 4
+**Current Lesson:** 4 completed — ready for Lesson 5
 **Last Updated:** 2026-03-26
 
 ---
 
 ## History
+
+### Lesson 4 — Completed 2026-03-26
+
+Parallel Module Development — 4 teammates building all modules simultaneously.
+
+**Team:** todo-tracker, dep-auditor, git-stats, code-health (parallel build, no dependencies)
+**Deliverables:** All 4 modules fully implemented with 52 tests passing
+**Key observations:**
+- All 4 teammates completed independently with zero file conflicts
+- No steering needed — detailed spawn prompts gave sufficient context
+- Teammates shared patterns with each other organically (glob tips, mocking approaches)
+- Completion order: todo-tracker → git-stats → dep-auditor → code-health
+- All CLI commands work end-to-end: table output, JSON output, filtering options
+- Broadcast shutdown not supported for structured messages — must send individually
+
+---
 
 ### Lesson 3 — Completed 2026-03-26
 

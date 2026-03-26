@@ -530,7 +530,7 @@ Run the `superpowers:code-reviewer` agent one final time against the complete pl
 | 1. Understanding Agent Teams | [x] | Architecture, when to use |
 | 2. Research Team | [x] | Spawn prompts, team sizing |
 | 3. Project Scaffolding | [x] | When NOT to use teams |
-| 4. Parallel Module Build | [ ] | File ownership, self-claiming |
+| 4. Parallel Module Build | [x] | File ownership, self-claiming |
 | 5. Quality Gates | [ ] | Reviewer teammate, plan approval, hooks |
 | 6. Multi-Lens Review | [ ] | Parallel review, competing perspectives |
 | 7. Competing Hypotheses | [ ] | Debug with adversarial teammates |
