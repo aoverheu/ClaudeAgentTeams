@@ -1,0 +1,40 @@
+{
+  "name": "devkit",
+  "version": "0.1.0",
+  "description": "Developer Toolkit CLI — TODO tracker, dependency auditor, git stats, code health reporter",
+  "type": "module",
+  "bin": {
+    "devkit": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aoverheu/ClaudeAgentTeams.git"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.6.2",
+    "commander": "^14.0.3",
+    "glob": "^13.0.6",
+    "simple-git": "^3.33.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "memfs": "^4.57.1",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.2"
+  }
+}

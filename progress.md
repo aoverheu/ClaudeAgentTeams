@@ -2,12 +2,23 @@
 
 ## Current Status
 
-**Current Lesson:** 3 — Project Scaffolding (single session)
+**Current Lesson:** 3 completed — ready for Lesson 4
 **Last Updated:** 2026-03-26
 
 ---
 
 ## History
+
+### Lesson 3 — Completed 2026-03-26
+
+Project Scaffolding — single session (no team, deliberately).
+
+**Created:** package.json, tsconfig.json, vitest.config.ts, CLI entry point, 4 command files, 4 stub modules, config loader, formatter, smoke tests
+**Verified:** `devkit --help` shows all 4 commands, `devkit todo` returns stub output, `devkit todo --json` returns valid JSON, 5/5 tests passing
+**Key insight:** Sequential setup work is faster and simpler without a team. The boundary between single session and team work is: scaffolding (sequential) → implementation (parallel).
+**Issues fixed:** rootDir required by TS 5.x, Chalk v5 API differs from v4, @types/node needs explicit tsconfig types entry
+
+---
 
 ### Lesson 2 — Completed 2026-03-26
 
