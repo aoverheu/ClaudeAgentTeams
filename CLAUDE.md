@@ -95,6 +95,7 @@ Track which mechanics are already documented to avoid duplication:
 | Doc | Mechanics Covered |
 |-----|-------------------|
 | `lesson_01_technical_details.md` | TeamCreate (config.json, inboxes), TaskCreate (highwatermark, lock), Agent spawning (subprocess, registration), mailbox system (JSON inbox polling), shutdown protocol, teams vs subagents |
+| `lesson_02_technical_details.md` | Task dependencies (blockedBy), broadcast messaging, peer-to-peer DMs |
 
 ## Source Control (MUST FOLLOW)
 
