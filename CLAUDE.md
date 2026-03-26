@@ -56,6 +56,36 @@ When starting a new session:
    - Summary of what was accomplished
    - Any notes for future sessions
 3. Check off the lesson in `plan.md` progress tracker
+4. **Git commit and push** the lesson using the workflow below
+
+## Source Control (MUST FOLLOW)
+
+**Repo:** https://github.com/aoverheu/ClaudeAgentTeams
+**Branch:** master
+
+### Per-Lesson Commits
+
+Every lesson gets committed when completed. The commit should include all files created or modified during the lesson.
+
+**Commit message format:**
+```
+Lesson XX: [Title] — [completed/in-progress]
+
+[1-2 sentence summary of what was accomplished]
+
+Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
+```
+
+**Workflow:**
+1. After updating lesson doc, progress, and plan — stage all changed files
+2. Commit with the format above
+3. Push to origin/master
+
+**Rules:**
+- Never commit `.env` (contains secrets — already in .gitignore)
+- Commit at natural breakpoints: lesson start (doc created), lesson end (doc completed), or significant milestones during longer lessons
+- The gh CLI requires `GITHUB_TOKEN` from `.env` to be exported: `export GITHUB_TOKEN=$(grep GITHUB_TOKEN .env | cut -d= -f2)`
+- The gh CLI path must be on PATH: `export PATH="/c/Program Files/GitHub CLI:$PATH"`
 
 ## Lesson Doc Template
 
