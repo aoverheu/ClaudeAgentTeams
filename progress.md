@@ -2,12 +2,18 @@
 
 ## Current Status
 
-**Current Lesson:** 4 completed — ready for Lesson 5
+**Current Lesson:** 5 in progress (not yet started — run in new session)
 **Last Updated:** 2026-03-26
 
 ---
 
 ## History
+
+### Lesson 5 — Started 2026-03-26
+
+Quality Gates — Code Review as Teammate. Prepared lesson doc; exercise to be run in a new Claude session.
+
+---
 
 ### Lesson 4 — Completed 2026-03-26
 
