@@ -2,16 +2,18 @@
 
 ## Current Status
 
-**Current Lesson:** 1 — Understanding Agent Teams
+**Current Lesson:** 1 completed — ready for Lesson 2
 **Last Updated:** 2026-03-26
 
 ---
 
 ## History
 
-### Lesson 1 — Started 2026-03-26
+### Lesson 1 — Completed 2026-03-26
 
 Understanding Agent Teams — architecture, when to use teams vs subagents, team lifecycle.
+
+**Observed:** All 5 core mechanics — parallel spawning, independent research, inter-teammate communication via mailbox, self-claiming tasks on dependency resolution, and consensus through direct discussion. No issues. Research-first approach validated as low-risk entry point.
 
 ---
 

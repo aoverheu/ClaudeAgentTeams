@@ -6,7 +6,7 @@ A hands-on deep-dive into Claude Code agent teams. Each lesson doc is a self-con
 
 | # | Lesson | Concept | Doc | Status |
 |---|--------|---------|-----|--------|
-| 1 | Understanding Agent Teams | Architecture, when to use teams vs subagents | [lesson_01.md](lesson_01.md) | In progress |
+| 1 | Understanding Agent Teams | Architecture, when to use teams vs subagents | [lesson_01.md](lesson_01.md) | Completed |
 | 2 | Research Team | Spawn prompts, team sizing, research-first approach | [lesson_02.md](lesson_02.md) | Not started |
 | 3 | Project Scaffolding | When NOT to use teams (single session) | [lesson_03.md](lesson_03.md) | Not started |
 | 4 | Parallel Module Build | File ownership, self-claiming, 4-teammate coordination | [lesson_04.md](lesson_04.md) | Not started |

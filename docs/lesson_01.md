@@ -1,6 +1,6 @@
 # Lesson 01: Understanding Agent Teams
-**Status:** IN PROGRESS
-**Date:** 2026-03-26 —
+**Status:** COMPLETED
+**Date:** 2026-03-26 — 2026-03-26
 
 ## Quick Reference
 Agent teams coordinate multiple Claude Code instances working in parallel. A team lead spawns teammates, each with their own context window, that communicate via a shared task list and mailbox. Use teams when work is parallelizable and teammates need to talk to each other — use subagents when you just need focused workers that report back.
@@ -117,7 +117,14 @@ Why structured this way:
 - "Compare notes" forces inter-teammate communication
 
 ### Team Output
-_(to be filled after exercise)_
+
+Observed all 5 core agent team mechanics in action:
+
+1. **Parallel spawning** — Lead spawned two teammates, one for Commander.js and one for Yargs. Both started researching independently and simultaneously.
+2. **Independent research** — Each teammate worked in its own context window without interfering with the other. This demonstrated the core value of teams: parallel work with no file conflicts.
+3. **Inter-teammate communication** — Teammates exchanged findings via the mailbox system. This is the key differentiator between agent teams and subagents — subagents only report back to the caller, teammates talk to *each other*.
+4. **Self-claiming tasks** — When the comparison task became unblocked (both research tasks done), one teammate self-claimed it without being told. This shows the task list's automatic dependency resolution.
+5. **Consensus through discussion** — Teammates reached a recommendation through direct discussion, not through the lead arbitrating. The lead synthesized the final result.
 
 ## Build Log
 ### Files Created
@@ -127,10 +134,11 @@ _(no code files in this lesson — concept exploration only)_
 _(none expected)_
 
 ### Decisions Made
-_(to be filled after exercise)_
+- No architecture decisions in this lesson — purely exploratory
+- The CLI framework decision (Commander.js vs Yargs) will be finalized in Lesson 2
 
 ### Issues Encountered
-_(to be filled after exercise)_
+- None — research tasks are low-risk and worked smoothly, which validates the docs' recommendation to start with read-only team exercises
 
 ## Connections
 - **Previous:** None — this is the foundation
