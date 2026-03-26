@@ -51,12 +51,50 @@ When starting a new session:
    - Fill in the **Build Log** section with files created/modified and reasoning
    - Fill in the **Quick Reference** summary
    - Set **Status: COMPLETED** at the top
+2. **Technical Details doc** — if this lesson introduced **new agent team mechanics** not covered in a prior technical details doc, create `docs/lesson_XX_technical_details.md` (see rules below)
 2. Update `progress.md` with:
    - Timestamped completion entry: `## Lesson X — Completed [date]`
    - Summary of what was accomplished
    - Any notes for future sessions
 3. Check off the lesson in `plan.md` progress tracker
 4. **Git commit and push** the lesson using the workflow below
+
+## Technical Details Docs
+
+### Purpose
+`docs/lesson_XX_technical_details.md` files explain **how agent team mechanics work under the hood** — what gets created on disk, how processes communicate, what protocols are used. These are the "how it works" companion to the lesson doc's "what we did and learned."
+
+### When to Create One
+Create a technical details doc when the lesson introduces **new agent team infrastructure or mechanics** not already documented in a prior technical details doc. The trigger is new plumbing, not a new use case of existing plumbing.
+
+**Decision guide:**
+- New team/task/mailbox infrastructure → YES
+- New communication pattern (plan approval, broadcasts, adversarial messaging) → YES
+- New coordination mechanic (file locking, dependency resolution, hooks) → YES
+- Same mechanics applied to a different use case → NO
+- Single session work (no team mechanics) → NO
+
+### How to Create One
+After the lesson exercise completes, investigate and document:
+- What was created on disk (files, directories, configs)
+- How processes were spawned and managed
+- What messages were exchanged and in what order
+- Any new protocols observed (approval, shutdown, claiming)
+- Key distinctions from previously documented mechanics
+
+If the lesson was run in a separate Claude session, prompt that session to explain the technical details before it's cleaned up:
+```
+Explain what just happened in technical detail: where was the team created on disk,
+how did teammates communicate, what files were created, what was the message flow?
+Save this as docs/lesson_XX_technical_details.md
+```
+
+### Existing Technical Details
+Track which mechanics are already documented to avoid duplication:
+
+| Doc | Mechanics Covered |
+|-----|-------------------|
+| `lesson_01_technical_details.md` | TeamCreate (config.json, inboxes), TaskCreate (highwatermark, lock), Agent spawning (subprocess, registration), mailbox system (JSON inbox polling), shutdown protocol, teams vs subagents |
 
 ## Source Control (MUST FOLLOW)
 

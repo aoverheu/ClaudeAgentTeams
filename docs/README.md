@@ -17,9 +17,18 @@ A hands-on deep-dive into Claude Code agent teams. Each lesson doc is a self-con
 | 9 | Integration & Polish | Final assembly, E2E testing, full code review | [lesson_09.md](lesson_09.md) | Not started |
 | 10 | Retrospective | Patterns cheat sheet, lessons learned | [lesson_10.md](lesson_10.md) | Not started |
 
+## Technical Details
+
+Deep-dive docs on how agent team mechanics work under the hood. Created when a lesson introduces new infrastructure, not just a new use case.
+
+| Lesson | Doc | Mechanics Covered |
+|--------|-----|-------------------|
+| 1 | [lesson_01_technical_details.md](lesson_01_technical_details.md) | TeamCreate, TaskCreate, Agent spawning, mailbox system, shutdown protocol |
+
 ## How to Use This Reference
 
 - **Quick refresher on a concept?** — Open the lesson doc, read the **Quick Reference** and **Concepts** sections
 - **Need a prompt template?** — Check the **Key Commands & Syntax** and **Prompts Used** sections
 - **Want to see what was built?** — Check the **Build Log** section
 - **Looking for gotchas?** — Check **Common Mistakes** and **Issues Encountered**
+- **How does it work under the hood?** — Check the **Technical Details** docs

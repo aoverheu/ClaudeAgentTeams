@@ -126,6 +126,60 @@ Observed all 5 core agent team mechanics in action:
 4. **Self-claiming tasks** — When the comparison task became unblocked (both research tasks done), one teammate self-claimed it without being told. This shows the task list's automatic dependency resolution.
 5. **Consensus through discussion** — Teammates reached a recommendation through direct discussion, not through the lead arbitrating. The lead synthesized the final result.
 
+#### Research Results
+
+**Team:** `cli-research` — 2 teammates + team lead
+**Tasks:** 3 total (Research Commander.js #1, Research Yargs #2, Compare & Recommend #3)
+**Dependencies:** Task #3 blocked by #1 and #2
+
+**API Design:**
+
+| Feature | Commander.js | Yargs |
+|---------|-------------|-------|
+| Style | Fluent method chaining | Fluent method chaining |
+| Commands | `.command()`, `.addCommand()` | `.command()`, `.commandDir()` |
+| Options | `.option()`, `.argument()`, `<required>`/`[optional]` | `.option()`, `.demandOption()`, type coercion |
+| Subcommands | Nested via `.addCommand()` | Hierarchical + `.commandDir()` auto-loading |
+| Middleware | Pre/post action hooks only | Full middleware stack |
+| Validation | Basic | Built-in type coercion, conflicts, implications |
+
+**TypeScript Support:**
+
+| Feature | Commander.js | Yargs |
+|---------|-------------|-------|
+| Built-in types | Yes, ships with declarations | No — requires `@types/yargs` |
+| Advanced inference | `@commander-js/extra-typings` (TS 5.0+) | `InferredOptionTypes<O>` via @types |
+| Known issues | Noisy generic tooltips | `commandDir()` broken with .ts files |
+
+**Ecosystem & Maintenance:**
+
+| Metric | Commander.js | Yargs |
+|--------|-------------|-------|
+| npm weekly downloads | ~105M+ | ~81M |
+| GitHub stars | ~28,000 | ~11,500 |
+| Open issues | 9 | Higher |
+| Latest version | 14.0.3 | 18.0.0 (ESM-first) |
+| Dependents | 122,795 packages | Fewer |
+| Used by | Vue CLI, Create React App | Various CLI tools |
+
+**Bundle Size:**
+
+| Metric | Commander.js | Yargs |
+|--------|-------------|-------|
+| Dependencies | **0 (zero)** | **58** |
+| Unpacked size | 209 kB | 231 kB |
+| Minified + gzip | ~20-25 kB | ~34.4 kB |
+| Module formats | CommonJS + ESM | CommonJS (v18: ESM-first) |
+
+**Recommendation: Commander.js** — wins on 9 of 12 criteria:
+1. Zero dependencies vs 58 — critical for a dev tool (install speed, supply chain risk)
+2. Better TypeScript story — first-party types, no DefinitelyTyped lag
+3. Right-sized API — DevKit's subcommands don't need Yargs' middleware/validation complexity
+4. ~40% smaller gzipped bundle
+5. Strongest ecosystem — 28k stars, 122k dependents, lowest abandonment risk
+
+**When Yargs would win:** Complex CLIs needing middleware chains, advanced argument validation with type coercion/conflicts, or automatic command file discovery. None apply to DevKit.
+
 ## Build Log
 ### Files Created
 _(no code files in this lesson — concept exploration only)_
