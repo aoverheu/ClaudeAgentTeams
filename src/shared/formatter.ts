@@ -12,15 +12,22 @@ export function createChalk(mode: OutputMode): ChalkInstance {
   return mode === 'plain' ? new Chalk({ level: 0 }) : new Chalk();
 }
 
-export function formatTable(headers: string[], rows: string[][], c: ChalkInstance): string {
+export function formatTable(
+  headers: string[],
+  rows: string[][],
+  c: ChalkInstance,
+  rowColorizer?: (row: string[], rowIndex: number) => string[],
+): string {
   const colWidths = headers.map((h, i) =>
     Math.max(h.length, ...rows.map(r => (r[i] || '').length))
   );
   const headerLine = headers.map((h, i) => c.bold(h.padEnd(colWidths[i]))).join('  ');
   const separator = colWidths.map(w => '-'.repeat(w)).join('  ');
-  const dataLines = rows.map(row =>
-    row.map((cell, i) => cell.padEnd(colWidths[i])).join('  ')
-  );
+  const dataLines = rows.map((row, rowIndex) => {
+    const paddedRow = row.map((cell, i) => cell.padEnd(colWidths[i]));
+    const coloredRow = rowColorizer ? rowColorizer(paddedRow, rowIndex) : paddedRow;
+    return coloredRow.join('  ');
+  });
   return [headerLine, separator, ...dataLines].join('\n');
 }
 
@@ -28,6 +35,20 @@ export interface FormatOptions {
   outputMode: OutputMode;
   verbose: boolean;
   chalk: ChalkInstance;
+  summary?: boolean;
+}
+
+const severityColor: Record<Severity, (c: ChalkInstance) => (text: string) => string> = {
+  critical: (c) => (text) => c.red(text),
+  error:    (c) => (text) => c.hex('#FA8072')(text),  // salmon
+  warning:  (c) => (text) => c.yellow(text),
+  info:     (c) => (text) => c.dim(text),
+};
+
+export function formatSummaryLine(result: ModuleResult, c: ChalkInstance): string {
+  const hasProblems = result.summary.bySeverity.critical > 0 || result.summary.bySeverity.error > 0;
+  const status = hasProblems ? c.red('needs attention') : c.green('ok');
+  return `${result.moduleName}: ${result.summary.total} items — ${status}`;
 }
 
 export function formatOutput(result: ModuleOutput, opts: FormatOptions): void {
@@ -41,8 +62,13 @@ export function formatOutput(result: ModuleOutput, opts: FormatOptions): void {
     return;
   }
 
-  const r = result as ModuleResult;
+  const r = result;
   const c = opts.chalk;
+
+  if (opts.summary) {
+    console.log(formatSummaryLine(r, c));
+    return;
+  }
 
   console.log(c.bold(`${r.moduleName}: ${r.summary.total} items found`));
 
@@ -66,7 +92,17 @@ export function formatOutput(result: ModuleOutput, opts: FormatOptions): void {
       item.severity,
       item.message,
     ]);
-    console.log(formatTable(headers, rows, c));
+
+    const isColor = opts.outputMode !== 'plain';
+    const colorizer = isColor
+      ? (row: string[], rowIndex: number): string[] => {
+          const severity = r.items[rowIndex].severity;
+          const colorFn = severityColor[severity](c);
+          return row.map(cell => colorFn(cell));
+        }
+      : undefined;
+
+    console.log(formatTable(headers, rows, c, colorizer));
   }
 }
 

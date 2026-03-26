@@ -2,12 +2,16 @@
 
 ## Current Status
 
-**Current Lesson:** 5 in progress (not yet started — run in new session)
+**Current Lesson:** 6
 **Last Updated:** 2026-03-26
 
 ---
 
 ## History
+
+### Lesson 5 — Completed 2026-03-26
+
+Quality Gates — Code Review as Teammate. 3-teammate team: Config Builder, Formatter Builder, Code Reviewer. Both builders submitted plans (approved), built in parallel, reviewer DMed feedback mid-build which builders addressed. 36 tests passing. Key learning: reviewer caught a severity type mismatch (`high` vs `error`) that would have diverged from the interface contract.
 
 ### Lesson 5 — Started 2026-03-26
 
