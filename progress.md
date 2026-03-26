@@ -2,12 +2,18 @@
 
 ## Current Status
 
-**Current Lesson:** 1 completed — ready for Lesson 2
+**Current Lesson:** 2 — Research Team (architecture design)
 **Last Updated:** 2026-03-26
 
 ---
 
 ## History
+
+### Lesson 2 — Started 2026-03-26
+
+Research Team — 3 teammates designing DevKit CLI architecture (CLI Architect, Module Designer, DX Researcher). Expected deliverable: docs/architecture.md.
+
+---
 
 ### Lesson 1 — Completed 2026-03-26
 
