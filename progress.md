@@ -2,12 +2,24 @@
 
 ## Current Status
 
-**Current Lesson:** 7
+**Current Lesson:** 8
 **Last Updated:** 2026-03-27
 
 ---
 
 ## History
+
+### Lesson 7 — Completed 2026-03-27
+
+Competing Hypotheses — 4 debugging teammates investigated a planted `!==` inversion bug in todo-tracker. Teammate 3 (filter-investigator) found it precisely; all others self-eliminated their hypotheses. Unanimous consensus, no debate needed. Bug fixed.
+
+**Key insight:** When one hypothesis produces a mechanically precise explanation that matches the exact symptom, the other teammates can self-eliminate without a cross-challenge round — fast convergence is a feature, not a shortcut.
+
+### Lesson 7 — Started 2026-03-27
+
+Competing Hypotheses — debugging a planted bug in todo-tracker. Bug: `!==` instead of `===` in tag filter. Exercise to be run in a new Claude session.
+
+---
 
 ### Lesson 6 — Completed 2026-03-27
 
