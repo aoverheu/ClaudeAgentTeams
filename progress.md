@@ -9,6 +9,12 @@
 
 ## History
 
+### Lesson 9 — Started 2026-03-27
+
+Integration & Polish — 3-teammate team (Integration, Polish, Testing) doing final assembly, followed by external code review. Exercise to be run in a new Claude session.
+
+---
+
 ### Lesson 8 — Completed 2026-03-27
 
 Advanced Patterns — 4-teammate team built `devkit report`. Dependency chain enforced correctly: Teammates 2 & 3 blocked on Teammate 1, Teammate 4 blocked on both. 108 tests passing.
