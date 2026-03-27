@@ -9,6 +9,12 @@
 
 ## History
 
+### Lesson 8 — Started 2026-03-27
+
+Advanced Patterns — 4-teammate team building the unified `devkit report` command. Schema Designer blocks all others; Module Adapter and Report Renderer run in parallel after schema approval; Test Writer runs last. Exercise to be run in a new Claude session.
+
+---
+
 ### Lesson 7 — Completed 2026-03-27
 
 Competing Hypotheses — 4 debugging teammates investigated a planted `!==` inversion bug in todo-tracker. Teammate 3 (filter-investigator) found it precisely; all others self-eliminated their hypotheses. Unanimous consensus, no debate needed. Bug fixed.
