@@ -2,12 +2,23 @@
 
 ## Current Status
 
-**Current Lesson:** 9
+**Current Lesson:** 10
 **Last Updated:** 2026-03-27
 
 ---
 
 ## History
+
+### Lesson 9 — Completed 2026-03-27
+
+Integration & Polish — 3-teammate team (Integration, Polish, Testing) ran in full parallel with zero file conflicts.
+
+**Results:**
+- integration: tested all 5 commands end-to-end (203 todos, 0 dep issues, 11 git-stats, 22 health, full report), fixed `report.ts` to use `loadConfig` and `formatError`
+- polish: improved `--help` text on git-stats/health/deps, added `try/catch` + `createChalk`/`resolveOutputMode` to `report.ts`
+- testing: created `tests/integration/cli.test.ts` — 12 tests, all passing, spawning actual CLI process via `npx tsx`
+
+**Key insight:** `report.ts` was the main integration seam — built as a higher-order command in Lesson 8, it hadn't adopted the shared patterns. Both the integration and polish teammates independently caught it from different angles (behavior vs. UX), confirming that parallel reviewers with different mandates find the same real problems.
 
 ### Lesson 9 — Started 2026-03-27
 

@@ -535,5 +535,5 @@ Run the `superpowers:code-reviewer` agent one final time against the complete pl
 | 6. Multi-Lens Review | [x] | Parallel review, competing perspectives |
 | 7. Competing Hypotheses | [x] | Debug with adversarial teammates |
 | 8. Advanced Patterns | [x] | Dependencies, cross-layer, steering |
-| 9. Integration & Polish | [ ] | Final assembly, E2E review |
+| 9. Integration & Polish | [x] | Final assembly, E2E review |
 | 10. Retrospective | [ ] | Patterns reference, lessons learned |

@@ -7,8 +7,8 @@ export function registerHealthCommand(program: Command): void {
   program
     .command('health')
     .description('Report code health metrics')
-    .option('--max-file-size <n>', 'Lines threshold for large file warning', parseInt)
-    .option('--max-complexity <n>', 'Cyclomatic complexity threshold', parseInt)
+    .option('--max-file-size <n>', 'Flag files exceeding N lines (default: module default)', parseInt)
+    .option('--max-complexity <n>', 'Flag functions exceeding cyclomatic complexity N', parseInt)
     .option('--check-coverage', 'Include test coverage gap analysis')
     .action(async (options, command) => {
       const globalOpts = command.optsWithGlobals();

@@ -7,10 +7,10 @@ export function registerGitStatsCommand(program: Command): void {
   program
     .command('git-stats')
     .description('Show git commit statistics')
-    .option('--since <date>', 'Start date for analysis')
-    .option('--until <date>', 'End date for analysis')
-    .option('--author <name>', 'Filter by author')
-    .option('--top-n <count>', 'Number of top contributors', parseInt)
+    .option('--since <date>', 'Start date for analysis (e.g. 2024-01-01, "3 months ago")')
+    .option('--until <date>', 'End date for analysis (e.g. 2024-12-31, "yesterday")')
+    .option('--author <name>', 'Filter commits by author name or email')
+    .option('--top-n <count>', 'Show top N contributors (default: all)', parseInt)
     .action(async (options, command) => {
       const globalOpts = command.optsWithGlobals();
       const config = await loadConfig(globalOpts.config);

@@ -9,7 +9,7 @@ export function registerDepsCommand(program: Command): void {
     .description('Audit package.json dependencies')
     .option('--prod-only', 'Check only production dependencies')
     .option('--dev-only', 'Check only dev dependencies')
-    .option('--severity <level>', 'Minimum severity: low, moderate, high, critical')
+    .option('--severity <level>', 'Minimum severity to report: low, moderate, high, critical')
     .action(async (options, command) => {
       const globalOpts = command.optsWithGlobals();
       const config = await loadConfig(globalOpts.config);
