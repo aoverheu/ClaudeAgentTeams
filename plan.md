@@ -532,7 +532,7 @@ Run the `superpowers:code-reviewer` agent one final time against the complete pl
 | 3. Project Scaffolding | [x] | When NOT to use teams |
 | 4. Parallel Module Build | [x] | File ownership, self-claiming |
 | 5. Quality Gates | [x] | Reviewer teammate, plan approval, hooks |
-| 6. Multi-Lens Review | [ ] | Parallel review, competing perspectives |
+| 6. Multi-Lens Review | [x] | Parallel review, competing perspectives |
 | 7. Competing Hypotheses | [ ] | Debug with adversarial teammates |
 | 8. Advanced Patterns | [ ] | Dependencies, cross-layer, steering |
 | 9. Integration & Polish | [ ] | Final assembly, E2E review |

@@ -2,12 +2,30 @@
 
 ## Current Status
 
-**Current Lesson:** 6
-**Last Updated:** 2026-03-26
+**Current Lesson:** 7
+**Last Updated:** 2026-03-27
 
 ---
 
 ## History
+
+### Lesson 6 — Completed 2026-03-27
+
+Multi-Lens Review — 3 reviewers (Security, Performance, Correctness) independently reviewed src/, then cross-challenged each other's findings.
+
+**Final findings:** 0 critical, 3 high, 7 medium, 6 low (16 total across all reviewers)
+**Cross-challenge changes:** 5 severity downgrades, 1 upgrade, 4 finding merges (duplicates collapsed)
+**Key observations:**
+- Different lenses catch different things: security found SSRF, performance found N+1 spawns, correctness found version comparison bug
+- Cross-challenge is the most valuable step: both scoped package encoding and binary file issues were independently found by 2 reviewers — the merge produced a sharper combined finding
+- SSRF downgraded unanimously: threat model doesn't apply to local CLI, illustrating that security severity depends on deployment context
+- Config merge order upgraded by security reviewer: "LOW if you think it's just a bug, MEDIUM if you think users will be confused and trust their CLI flags" — real-world severity depends on UX expectations, not just code
+
+### Lesson 6 — Started 2026-03-26
+
+Multi-Lens Review — 3 reviewer teammates (Security, Performance, Correctness) reviewing the full src/ tree. Exercise to be run in a new Claude session.
+
+---
 
 ### Lesson 5 — Completed 2026-03-26
 
