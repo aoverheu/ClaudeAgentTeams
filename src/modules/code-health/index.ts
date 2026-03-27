@@ -12,6 +12,8 @@ import type {
   ResultItem,
   Severity,
   ResultWarning,
+  ReportSection,
+  ReportSectionItem,
 } from '../../shared/types.js';
 import { ModuleErrorCode } from '../../shared/types.js';
 
@@ -116,6 +118,40 @@ const codeHealth: Module<CodeHealthOptions> = {
       };
     }
     return null;
+  },
+
+  async toReportSection(options): Promise<ReportSection> {
+    const output = await this.execute(options);
+
+    if (!output.success) {
+      return {
+        title: 'Code Health',
+        summary: `Error: ${output.error.message}`,
+        items: [],
+        metadata: { error: true },
+      };
+    }
+
+    const { summary, items } = output;
+    const sectionItems: ReportSectionItem[] = items.map((item) => ({
+      label: item.file ?? (item.meta?.type as string) ?? 'summary',
+      value: item.message,
+      severity: item.severity,
+      meta: item.meta,
+    }));
+
+    const totalFiles = (summary.totalFiles as number) ?? 0;
+    const totalLines = (summary.totalLines as number) ?? 0;
+    const parts: string[] = [`${totalFiles} files, ${totalLines} lines`];
+    if (summary.bySeverity.error > 0) parts.push(`${summary.bySeverity.error} errors`);
+    if (summary.bySeverity.warning > 0) parts.push(`${summary.bySeverity.warning} warnings`);
+
+    return {
+      title: 'Code Health',
+      summary: parts.join(', '),
+      items: sectionItems,
+      metadata: { durationMs: output.durationMs, totalFiles, totalLines },
+    };
   },
 
   async execute(options): Promise<ModuleOutput> {

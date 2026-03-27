@@ -12,6 +12,8 @@ import type {
   ResultItem,
   Severity,
   ResultWarning,
+  ReportSection,
+  ReportSectionItem,
 } from '../../shared/types.js';
 import { ModuleErrorCode } from '../../shared/types.js';
 
@@ -84,6 +86,40 @@ const todoTracker: Module<TodoOptions> = {
       };
     }
     return null;
+  },
+
+  async toReportSection(options): Promise<ReportSection> {
+    const output = await this.execute(options);
+
+    if (!output.success) {
+      return {
+        title: 'TODO Tracker',
+        summary: `Error: ${output.error.message}`,
+        items: [],
+        metadata: { error: true },
+      };
+    }
+
+    const { summary, items } = output;
+    const sectionItems: ReportSectionItem[] = items.map((item) => ({
+      label: item.file ? `${item.file}:${item.line}` : 'unknown',
+      value: item.message,
+      severity: item.severity,
+      meta: item.meta,
+    }));
+
+    const severityCounts = summary.bySeverity;
+    const parts: string[] = [`Found ${summary.total} comments`];
+    if (severityCounts.critical > 0) parts.push(`${severityCounts.critical} critical`);
+    if (severityCounts.error > 0) parts.push(`${severityCounts.error} errors`);
+    if (severityCounts.warning > 0) parts.push(`${severityCounts.warning} warnings`);
+
+    return {
+      title: 'TODO Tracker',
+      summary: parts.join(', '),
+      items: sectionItems,
+      metadata: { durationMs: output.durationMs },
+    };
   },
 
   async execute(options): Promise<ModuleOutput> {

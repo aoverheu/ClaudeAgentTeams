@@ -10,6 +10,8 @@ import type {
   ResultItem,
   Severity,
   ResultWarning,
+  ReportSection,
+  ReportSectionItem,
 } from '../../shared/types.js';
 import { ModuleErrorCode } from '../../shared/types.js';
 
@@ -94,6 +96,40 @@ const depAudit: Module<DepAuditOptions> = {
       };
     }
     return null;
+  },
+
+  async toReportSection(options): Promise<ReportSection> {
+    const output = await this.execute(options);
+
+    if (!output.success) {
+      return {
+        title: 'Dependency Audit',
+        summary: `Error: ${output.error.message}`,
+        items: [],
+        metadata: { error: true },
+      };
+    }
+
+    const { summary, items } = output;
+    const sectionItems: ReportSectionItem[] = items.map((item) => ({
+      label: (item.meta?.package as string) ?? 'unknown',
+      value: item.message,
+      severity: item.severity,
+      meta: item.meta,
+    }));
+
+    const totalDeps = (summary.totalDependencies as number) ?? 0;
+    const outdated = (summary.outdated as number) ?? 0;
+    const parts: string[] = [`${totalDeps} dependencies checked`];
+    if (outdated > 0) parts.push(`${outdated} outdated`);
+    if (summary.bySeverity.critical > 0) parts.push(`${summary.bySeverity.critical} critical`);
+
+    return {
+      title: 'Dependency Audit',
+      summary: parts.join(', '),
+      items: sectionItems,
+      metadata: { durationMs: output.durationMs, totalDependencies: totalDeps },
+    };
   },
 
   async execute(options): Promise<ModuleOutput> {

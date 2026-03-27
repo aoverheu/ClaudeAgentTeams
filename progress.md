@@ -2,12 +2,18 @@
 
 ## Current Status
 
-**Current Lesson:** 8
+**Current Lesson:** 9
 **Last Updated:** 2026-03-27
 
 ---
 
 ## History
+
+### Lesson 8 — Completed 2026-03-27
+
+Advanced Patterns — 4-teammate team built `devkit report`. Dependency chain enforced correctly: Teammates 2 & 3 blocked on Teammate 1, Teammate 4 blocked on both. 108 tests passing.
+
+**Key insight:** Blocked teammates don't auto-wake when dependencies complete — the lead must send an explicit unblock message. Task dependencies enforce ordering but don't create notifications; the lead is still the coordination hub.
 
 ### Lesson 8 — Started 2026-03-27
 

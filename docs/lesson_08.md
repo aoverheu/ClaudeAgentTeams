@@ -1,6 +1,6 @@
 # Lesson 8: Advanced Patterns and Cross-Layer Coordination
-**Status:** IN PROGRESS
-**Date:** 2026-03-27
+**Status:** COMPLETED
+**Date:** 2026-03-27 — 2026-03-27
 
 ## Quick Reference
 Use task dependencies to enforce ordering when work has a critical path. A schema designer blocks all implementation; module adapters and the renderer run in parallel once the schema is approved; tests run last. Plan approval on the critical-path task prevents downstream work from starting before the contract is settled. This is the pattern for any feature with a shared data model.
@@ -22,11 +22,20 @@ Use task dependencies to enforce ordering when work has a critical path. A schem
 All 4 modules implemented. Shared integration layer built. This lesson adds a new `devkit report` command that aggregates output from all 4 modules into a Markdown report.
 
 ### Steps
-_To be filled after exercise completes._
+1. Created team `devkit-report` with 4 tasks and dependency chain wired: Task 1 blocks Tasks 2 and 3; Tasks 2 and 3 block Task 4.
+2. Spawned all 4 teammates simultaneously. Teammates 2, 3, and 4 checked in immediately and confirmed they were idle/waiting.
+3. `schema-designer` submitted a plan (via plain message) for approval. Plan reviewed and approved.
+4. `schema-designer` implemented the schema and signaled completion.
+5. Team lead manually messaged `module-adapter` and `report-renderer` to unblock them (TaskUpdate dependency resolution doesn't auto-notify idle teammates — they need a message to wake up).
+6. `module-adapter` and `report-renderer` ran in parallel.
+7. `report-renderer` finished first; team lead waited for `module-adapter`.
+8. Once both complete, team lead messaged `test-writer` to unblock Task 4.
+9. `test-writer` wrote 20 tests (13 unit + 7 integration) and confirmed all 108 tests pass.
+10. Team shut down via individual shutdown_request messages (broadcast doesn't support structured messages).
 
 ### Prompts Used
 
-**Cross-Layer Coordination Team (from plan.md):**
+**Team spawn prompt:**
 ```
 Create an agent team to add a unified report feature to devkit.
 The project is at C:\Deleteme\Projects\ClaudeAgentTeams.
@@ -59,21 +68,53 @@ Enforce the dependency order. Teammates 2 and 3 must wait for teammate 1.
 Teammate 4 must wait for teammates 2 and 3.
 ```
 
+**Plan approval message to schema-designer:**
+```
+Approved. The design is clean and consistent. Proceed with implementation.
+Place ReportSectionItem and ReportSection after ResultWarning, and add
+toReportSection to the Module interface alongside execute and validate.
+```
+
+**Unblock message to module-adapter and report-renderer (after Task 1):**
+```
+schema-designer has completed Task #1. src/shared/types.ts now has
+ReportSectionItem, ReportSection, and toReportSection() on the Module interface.
+Read the file and start your task.
+```
+
 ### Team Output
-_To be filled after exercise completes._
+- **schema-designer** added `ReportSectionItem` (label/value/severity/meta) and `ReportSection` (title/summary/items/metadata) to types.ts, plus `toReportSection()` on the `Module` interface.
+- **module-adapter** implemented `toReportSection()` on all 4 modules — each calls `execute()` with default options and formats results into a `ReportSection`. TypeScript compiled cleanly.
+- **report-renderer** built `src/modules/report/index.ts` (aggregates all 4 modules, assembles Markdown with header/sections/footer, graceful per-module error handling), `src/commands/report.ts` (`devkit report` with `--output` and `--stdout` flags, `--json` support), and registered the command in `src/index.ts`.
+- **test-writer** wrote 13 unit tests (mock all 4 modules, verify assembly, Markdown format, error handling) and 7 integration tests (real git repo temp dir, all 4 section headers, file output). All 108 tests passing.
 
 ## Build Log
 ### Files Created
-_To be filled after exercise completes._
+| File | Description | Reason for Being |
+|------|-------------|-----------------|
+| `src/commands/report.ts` | `devkit report` command — `--output`, `--stdout`, `--json` flags | CLI entry point for unified report |
+| `src/modules/report/index.ts` | Report aggregator — instantiates all 4 modules, calls `toReportSection()`, assembles Markdown with header/sections/footer and graceful per-module error handling | Core report generation logic |
+| `tests/unit/report.test.ts` | 13 unit tests — mocks all 4 modules, verifies assembly, Markdown structure, error handling | report-renderer unit coverage |
+| `tests/integration/report.test.ts` | 7 integration tests — real git repo temp dir, all 4 section headers present, file output | End-to-end pipeline verification |
 
 ### Files Modified
-_To be filled after exercise completes._
+| File | What Changed | Why |
+|------|-------------|-----|
+| `src/shared/types.ts` | Added `ReportSectionItem`, `ReportSection` types; added `toReportSection()` to `Module` interface | Schema Designer established the contract all other tasks depended on |
+| `src/modules/todo-tracker/index.ts` | Implemented `toReportSection()` | Module Adapter phase |
+| `src/modules/dep-audit/index.ts` | Implemented `toReportSection()` | Module Adapter phase |
+| `src/modules/git-stats/index.ts` | Implemented `toReportSection()` | Module Adapter phase |
+| `src/modules/code-health/index.ts` | Implemented `toReportSection()` | Module Adapter phase |
+| `src/index.ts` | Registered `devkit report` command | Report Renderer wired the command into the CLI |
 
 ### Decisions Made
-_To be filled after exercise completes._
+- **Graceful per-module error handling in the aggregator** — if any module throws, the report still runs for the others and includes an error section rather than crashing. Keeps the report useful even in partial failure scenarios.
+- **`--stdout` flag on `devkit report`** — default behavior writes to `devkit-report.md`; `--stdout` prints to terminal. Lets CI pipelines consume the report without creating files.
+- **`toReportSection()` calls `execute()` with default options** — modules don't need a separate invocation path; the report is just a formatted wrapper around the existing execution result.
+- **Manual unblock messages required** — blocked teammates don't auto-wake when dependencies complete. The lead must message them explicitly. This is a key operational detail of the dependency mechanic.
 
 ### Issues Encountered
-_To be filled after exercise completes._
+- **Idle teammates need explicit unblock messages** — when Task 1 completed, Teammates 2 and 3 did not self-start. The lead had to message them with `"schema-designer has completed Task #1... Read the file and start your task."` This is by design (teammates poll their mailbox, not task state), but it means the lead must actively manage the dependency handoff.
 
 ## Connections
 - **Builds on Lesson 2** — The architecture doc defined the Module interface; this lesson extends it with `toReportSection()`

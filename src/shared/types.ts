@@ -117,6 +117,30 @@ export interface ResultWarning {
   context?: string;
 }
 
+/** A single item within a report section */
+export interface ReportSectionItem {
+  /** Label or heading for this item (e.g., "Outdated packages", "Large files") */
+  label: string;
+  /** Value or description */
+  value: string;
+  /** Severity level for visual formatting */
+  severity?: Severity;
+  /** Additional structured data */
+  meta?: Record<string, unknown>;
+}
+
+/** A section of a unified DevKit report, produced by one module */
+export interface ReportSection {
+  /** Section title (typically the module name, e.g., "TODO Tracker") */
+  title: string;
+  /** One-line summary of findings (e.g., "Found 12 TODOs, 3 critical") */
+  summary: string;
+  /** Individual report items */
+  items: ReportSectionItem[];
+  /** Optional metadata for the section */
+  metadata?: Record<string, unknown>;
+}
+
 /** Successful module result */
 export interface ModuleResult {
   /** Module that produced this result */
@@ -218,6 +242,12 @@ export interface Module<TOptions extends ModuleOptions = ModuleOptions> {
    * Returns null if valid, or a ModuleError describing what's wrong.
    */
   validate(options: TOptions): Promise<ModuleError | null>;
+
+  /**
+   * Convert module results into a report section for unified report output.
+   * Each module distills its findings into a standardized section format.
+   */
+  toReportSection(options: TOptions): Promise<ReportSection>;
 }
 
 // ---------------------------------------------------------------------------

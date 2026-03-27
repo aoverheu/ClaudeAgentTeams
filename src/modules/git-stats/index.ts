@@ -1,6 +1,6 @@
 import { existsSync } from 'fs';
 import { simpleGit } from 'simple-git';
-import type { Module, GitStatsOptions, ModuleOutput, ModuleError, ResultItem, Severity } from '../../shared/types.js';
+import type { Module, GitStatsOptions, ModuleOutput, ModuleError, ResultItem, Severity, ReportSection, ReportSectionItem } from '../../shared/types.js';
 import { ModuleErrorCode } from '../../shared/types.js';
 
 const gitStats: Module<GitStatsOptions> = {
@@ -27,6 +27,49 @@ const gitStats: Module<GitStatsOptions> = {
     }
 
     return null;
+  },
+
+  async toReportSection(options): Promise<ReportSection> {
+    const output = await this.execute(options);
+
+    if (!output.success) {
+      return {
+        title: 'Git Stats',
+        summary: `Error: ${output.error.message}`,
+        items: [],
+        metadata: { error: true },
+      };
+    }
+
+    const { summary, items } = output;
+    const contributors = items.filter((i) => (i.meta?.category as string) !== 'active-file');
+    const activeFiles = items.filter((i) => (i.meta?.category as string) === 'active-file');
+
+    const sectionItems: ReportSectionItem[] = [
+      ...contributors.map((item) => ({
+        label: (item.meta?.author as string) ?? 'unknown',
+        value: item.message,
+        severity: item.severity,
+        meta: item.meta,
+      })),
+      ...activeFiles.map((item) => ({
+        label: item.file ?? 'unknown',
+        value: item.message,
+        severity: item.severity,
+        meta: item.meta,
+      })),
+    ];
+
+    const totalCommits = (summary.totalCommits as number) ?? 0;
+    const contributorCount = (summary.contributorCount as number) ?? 0;
+    const commitsPerWeek = (summary.commitsPerWeek as number) ?? 0;
+
+    return {
+      title: 'Git Stats',
+      summary: `${totalCommits} commits by ${contributorCount} contributors (${commitsPerWeek}/week)`,
+      items: sectionItems,
+      metadata: { durationMs: output.durationMs, totalCommits, contributorCount },
+    };
   },
 
   async execute(options): Promise<ModuleOutput> {

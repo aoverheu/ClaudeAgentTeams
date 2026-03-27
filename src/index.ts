@@ -4,6 +4,7 @@ import { registerTodoCommand } from './commands/todo.js';
 import { registerDepsCommand } from './commands/deps.js';
 import { registerGitStatsCommand } from './commands/git-stats.js';
 import { registerHealthCommand } from './commands/health.js';
+import { registerReportCommand } from './commands/report.js';
 
 const program = new Command();
 
@@ -24,5 +25,6 @@ registerTodoCommand(program);
 registerDepsCommand(program);
 registerGitStatsCommand(program);
 registerHealthCommand(program);
+registerReportCommand(program);
 
 program.parse();
