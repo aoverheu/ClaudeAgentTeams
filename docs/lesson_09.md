@@ -113,6 +113,38 @@ The key structural choice was **clear file ownership with no overlap**: integrat
 ### Issues Encountered
 - Node.js v22+ DEP0190 deprecation warning when using `spawnSync` with `shell: true` and array args — informational only, tests unaffected. Could be fixed by joining args to a string instead of splitting.
 
+## Post-Phase Code Review
+
+**Verdict: Not ready for 1.0.** 3 critical, 6 important, 5 minor findings.
+
+### Critical (must fix before 1.0)
+
+| # | Finding |
+|---|---------|
+| C1 | `report.ts` loads config but never passes it into `generateReport` — custom ignore paths/thresholds are silently ignored. Every other command spreads its config slice into `mergedOptions`. |
+| C2 | `git-stats` imports `'fs'` instead of `'node:fs'` — the test mock targets `'fs'` to match, so if the import is corrected the mock silently stops working with no test failure. |
+| C3 | `report` command skips `validate()` entirely — bad `--target` produces a partially-rendered report with four error sections instead of a clean upfront error. All other commands validate first. |
+
+### Important (should fix)
+
+| # | Finding |
+|---|---------|
+| I1 | `dep-audit` reads `registryUrl` via unsafe `Record<string, unknown>` cast — `DepAuditOptions` is missing the field in types. |
+| I2 | All commands: `loadConfig` throws on invalid JSON/unknown keys but no command catches it — user sees a raw stack trace. |
+| I3 | `smoke.test.ts` makes live network calls to npmjs.org on every test run. |
+| I4 | `code-health` coverage detection uses `!== false` semantics — effectively opt-out, contradicts `--check-coverage` being an opt-in flag. |
+| I5 | No `--json` integration test for the `report` command. |
+| I6 | `docs/architecture.md` and `types.ts` header still say "4 modules" — stale after `report` was added. |
+
+### Minor
+- `config` dead variable in `report.ts` (loaded but unused after C1 fix)
+- `XXX` tag listed in config defaults but never scanned by `todo-tracker`
+- Integration test path splitting is fragile with spaces in paths
+- No `.devkitrc.example.json`
+
+### Key Observation
+C1 and C3 are both in `report.ts` — the same integration seam the parallel team flagged. The integration and polish teammates fixed the *pattern* (adding `loadConfig`, `formatError`) but not the *wiring* (actually using the loaded config, actually calling `validate()`). The external reviewer caught what the internal team missed because it was looking at behavior against spec, not just code consistency.
+
 ## Connections
 - **Brings together Lessons 3–8** — every module, command, formatter, and config loader built across the course is exercised here
 - **Sets up Lesson 10** — Retrospective and patterns reference — the course culminates with reflection on what worked, what the integration seams revealed, and which patterns to carry forward

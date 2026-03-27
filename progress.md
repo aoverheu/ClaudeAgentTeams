@@ -18,6 +18,8 @@ Integration & Polish — 3-teammate team (Integration, Polish, Testing) ran in f
 - polish: improved `--help` text on git-stats/health/deps, added `try/catch` + `createChalk`/`resolveOutputMode` to `report.ts`
 - testing: created `tests/integration/cli.test.ts` — 12 tests, all passing, spawning actual CLI process via `npx tsx`
 
+**Post-phase review verdict:** Not ready for 1.0. 3 critical, 6 important, 5 minor. C1+C3 both in report.ts — config loaded but not wired, validate() never called. The integration team fixed the code patterns but not the behavioral wiring; the external reviewer caught it by checking against spec.
+
 **Key insight:** `report.ts` was the main integration seam — built as a higher-order command in Lesson 8, it hadn't adopted the shared patterns. Both the integration and polish teammates independently caught it from different angles (behavior vs. UX), confirming that parallel reviewers with different mandates find the same real problems.
 
 ### Lesson 9 — Started 2026-03-27
