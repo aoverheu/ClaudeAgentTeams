@@ -15,7 +15,7 @@ A hands-on deep-dive into Claude Code agent teams. Each lesson doc is a self-con
 | 7 | Competing Hypotheses | Adversarial debugging with parallel investigation | [lesson_07.md](lesson_07.md) | Completed |
 | 8 | Advanced Patterns | Task dependencies, cross-layer coordination, steering | [lesson_08.md](lesson_08.md) | Completed |
 | 9 | Integration & Polish | Final assembly, E2E testing, full code review | [lesson_09.md](lesson_09.md) | In progress |
-| 10 | Retrospective | Patterns cheat sheet, lessons learned | [lesson_10.md](lesson_10.md) | Not started |
+| 10 | Retrospective | Patterns cheat sheet, lessons learned | [lesson_10.md](lesson_10.md) | Completed |
 
 ## Technical Details
 

@@ -2,12 +2,20 @@
 
 ## Current Status
 
-**Current Lesson:** 10
+**Course complete.** All 10 lessons finished.
 **Last Updated:** 2026-03-27
 
 ---
 
 ## History
+
+### Lesson 10 — Completed 2026-03-27
+
+Retrospective — patterns cheat sheet, token cost analysis, post-mortem on what worked and what the Lesson 9 review surfaced. No agent team; discussion-based lesson.
+
+**Key takeaway:** The hard part isn't the tooling — it's writing spawn prompts specific enough that teammates can operate without inheriting your context. No steering needed across the entire course.
+
+---
 
 ### Lesson 9 — Completed 2026-03-27
 
